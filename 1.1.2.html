@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IGCSE ICT - 1.4 Types of Computers Quiz</title>
+    <style>
+        :root {
+            --bg-main: #090d16;
+            --bg-card: #131d31;
+            --border-color: #223354;
+            --accent: #38bdf8;
+            --accent-hover: #0ea5e9;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        header {
+            background-color: var(--bg-card);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1.5rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        header h1 {
+            color: var(--accent);
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.35rem;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        main {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .quiz-status {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.25rem;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .score-pill {
+            background-color: #0c4a6e;
+            color: #7dd3fc;
+            padding: 0.35rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 1px solid #0284c7;
+        }
+
+        .card {
+            width: 100%;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 1.25rem;
+            padding: 2rem;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .question-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #f1f5f9;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .option-btn {
+            width: 100%;
+            text-align: left;
+            background-color: #1e293b;
+            color: var(--text-main);
+            padding: 1rem 1.25rem;
+            border-radius: 0.85rem;
+            border: 1px solid #334155;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            background-color: #283548;
+            border-color: var(--accent);
+            transform: translateY(-1px);
+        }
+
+        .option-btn:disabled {
+            cursor: not-allowed;
+        }
+
+        .option-btn.correct {
+            background-color: #064e3b !important;
+            border-color: #059669 !important;
+            color: #ecfdf5 !important;
+        }
+
+        .option-btn.incorrect {
+            background-color: #7f1d1d !important;
+            border-color: #dc2626 !important;
+            color: #fee2e2 !important;
+        }
+
+        .feedback-box {
+            padding: 1.15rem;
+            border-radius: 0.85rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .feedback-box.correct-feedback {
+            background-color: #022c22;
+            border: 1px solid #047857;
+            color: #a7f3d0;
+        }
+
+        .feedback-box.incorrect-feedback {
+            background-color: #450a0a;
+            border: 1px solid #b91c1c;
+            color: #fecdd3;
+        }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: #0f172a;
+            font-weight: 700;
+            padding: 0.85rem 1.75rem;
+            border-radius: 0.85rem;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+
+        .results-card {
+            text-align: center;
+            padding: 3rem 2rem;
+        }
+
+        .results-card h2 {
+            font-size: 2.25rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .results-card p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        footer {
+            background-color: var(--bg-card);
+            border-top: 1px solid var(--border-color);
+            padding: 1rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>IGCSE ICT Practice Quiz</h1>
+        <p>Topics 1.4.1 Desktop Computers & 1.4.2 Mobile Computers</p>
+    </header>
+
+    <main>
+        <div class="quiz-status">
+            <span id="question-counter">Question 1 of 40</span>
+            <span id="score-display" class="score-pill">Score: 0</span>
+        </div>
+
+        <!-- Quiz Container -->
+        <div id="quiz-container" class="card">
+            <div id="question-box" class="question-text">
+                Loading question...
+            </div>
+
+            <div id="options-container" class="options-list">
+                <!-- Options populated dynamically -->
+            </div>
+
+            <div id="feedback-box" class="feedback-box hidden">
+                <!-- Feedback populated dynamically -->
+            </div>
+
+            <div style="display: flex; justify-content: flex-end;">
+                <button id="next-btn" onclick="nextQuestion()" class="btn-primary hidden">Next Question</button>
+            </div>
+        </div>
+
+        <!-- Results Container -->
+        <div id="results-container" class="card results-card hidden">
+            <h2>Quiz Completed! 🎉</h2>
+            <p id="final-score">You scored X out of 40</p>
+            <button onclick="restartQuiz()" class="btn-primary">Restart Quiz</button>
+        </div>
+    </main>
+
+    <footer>
+        IGCSE ICT Revision &bull; Types of Computers (Desktop & Mobile)
+    </footer>
+
+    <script>
+        const questions = [
+            {
+                question: "What is the general definition of a desktop computer according to the IGCSE ICT curriculum?",
+                options: [
+                    { text: "A portable battery-powered device with an integrated touchscreen", isCorrect: false, rationale: "Battery-powered touchscreen devices describe tablets or smartphones." },
+                    { text: "A general-purpose computer consisting of separate components such as a monitor, keyboard, mouse, and processor unit", isCorrect: true, rationale: "Desktop computers are stationary systems made of separate peripheral and processor units." },
+                    { text: "A massive multi-user system used by banks for batch processing", isCorrect: false, rationale: "This describes a mainframe computer." },
+                    { text: "A wearable micro-computer strapped to the wrist", isCorrect: false, rationale: "This describes a smartwatch." }
+                ]
+            },
+            {
+                question: "Which of the following is a key physical characteristic of a desktop computer compared to a laptop?",
+                options: [
+                    { text: "It is designed to be highly portable and lightweight for travel.", isCorrect: false, rationale: "Desktops are stationary and less portable." },
+                    { text: "Its components are stationary and separate, making it less portable", isCorrect: true, rationale: "Desktops use separate components that remain stationary on a desk." },
+                    { text: "It relies entirely on rechargeable lithium-ion battery power.", isCorrect: false, rationale: "Desktops plug directly into wall mains power." },
+                    { text: "It uses a touch-sensitive screen as its primary input device instead of a keyboard.", isCorrect: false, rationale: "Desktops typically use physical keyboards and mice." }
+                ]
+            },
+            {
+                question: "What is an advantage of a desktop computer over a laptop computer regarding hardware specifications?",
+                options: [
+                    { text: "Desktops generally offer better specifications (e.g., faster processors and more storage) for the same price", isCorrect: true, rationale: "Due to larger casing and cooling, desktops provide superior performance per cost." },
+                    { text: "Desktops consume significantly less electrical power than laptops.", isCorrect: false, rationale: "Desktops draw more power from mains electricity." },
+                    { text: "Desktops come with built-in mobile cellular 5G antennas as standard.", isCorrect: false, rationale: "Laptops and desktops both rely on Wi-Fi or Ethernet; cellular is common in phones/tablets." },
+                    { text: "Desktops generate zero internal heat.", isCorrect: false, rationale: "Desktops generate heat, though they dissipate it better than compact laptops." }
+                ]
+            },
+            {
+                question: "Which advantage do desktop computers have regarding upgrading and maintenance?",
+                options: [
+                    { text: "They are easier and cheaper to upgrade or expand with standardized spare parts", isCorrect: true, rationale: "Desktop components are modular and standardized, making RAM, GPU, and storage upgrades simple and cost-effective." },
+                    { text: "They cannot be opened or modified under any circumstances.", isCorrect: false, rationale: "Desktops are designed for easy internal access." },
+                    { text: "They require proprietary custom-built microchips for every repair.", isCorrect: false, rationale: "Desktops use standardized parts." },
+                    { text: "Upgrading a desktop requires replacing the entire monitor and keyboard.", isCorrect: false, rationale: "Internal upgrades do not require replacing peripherals." }
+                ]
+            },
+            {
+                question: "How does internet stability typically compare between a desktop computer and a mobile laptop?",
+                options: [
+                    { text: "Desktops offer more stable internet access with wired Ethernet connections", isCorrect: true, rationale: "Stationary desktops frequently use wired Ethernet cables, providing a more stable connection than wireless Wi-Fi." },
+                    { text: "Laptops always have faster internet because they lack network cards.", isCorrect: false, rationale: "Laptops also have network cards." },
+                    { text: "Desktops cannot connect to the internet at all.", isCorrect: false, rationale: "Desktops connect via Ethernet or Wi-Fi adapters." },
+                    { text: "Laptops rely exclusively on dial-up telephone lines.", isCorrect: false, rationale: "Laptops use modern Wi-Fi." }
+                ]
+            },
+            {
+                question: "What is a major disadvantage of desktop computers compared to laptops?",
+                options: [
+                    { text: "Lack of portability and a more complicated setup with trailing wires causing desk clutter", isCorrect: true, rationale: "Separate components require multiple cables and fixed desk space, limiting mobility." },
+                    { text: "Higher risk of theft because they can be easily slipped into a backpack.", isCorrect: false, rationale: "Desktops are heavy and stationary, making theft difficult compared to laptops." },
+                    { text: "Extremely short battery life of under 30 minutes.", isCorrect: false, rationale: "Desktops run on mains power and have no internal battery." },
+                    { text: "Inability to run standard office productivity software.", isCorrect: false, rationale: "Desktops run office software easily." }
+                ]
+            },
+            {
+                question: "What is a practical inconvenience caused by a desktop's lack of portability when working on files?",
+                options: [
+                    { text: "Files must be manually copied to a portable storage device (like a USB flash drive) to take work elsewhere", isCorrect: true, rationale: "Because the computer cannot be carried, transferring files requires portable media or cloud storage." },
+                    { text: "The operating system automatically deletes all saved documents every evening.", isCorrect: false, rationale: "Files remain safely stored on the hard drive." },
+                    { text: "The monitor screen shatters if moved even one inch.", isCorrect: false, rationale: "Screens do not shatter from minor shifts." },
+                    { text: "Printers refuse to print documents created on desktops.", isCorrect: false, rationale: "Printers work identically with both." }
+                ]
+            },
+            {
+                question: "Which of the following is a primary use of desktop computers in business and office environments?",
+                options: [
+                    { text: "Word processing, managing spreadsheets, accounting finance software, and databases", isCorrect: true, rationale: "Desktops are standard office workhorses for administrative and financial tasks." },
+                    { text: "Making cellular voice phone calls on public streets while walking", isCorrect: false, rationale: "Cellular calls are made on smartphones." },
+                    { text: "Tracking daily fitness steps and heart rate on a wrist", isCorrect: false, rationale: "Fitness tracking is done by smartwatches." },
+                    { text: "Navigating GPS driving directions on a car dashboard", isCorrect: false, rationale: "GPS navigation uses mobile devices or car systems." }
+                ]
+            },
+            {
+                question: "How are desktop computers utilized in educational settings?",
+                options: [
+                    { text: "For interactive teaching, student learning software, and computer-based examinations", isCorrect: true, rationale: "Schools use desktop computer labs for lessons, interactive software, and exams." },
+                    { text: "For portable outdoor field data collection in remote rainforests", isCorrect: false, rationale: "Field work requires portable laptops or tablets." },
+                    { text: "As pocket-sized devices carried between classrooms by students", isCorrect: false, rationale: "Desktops remain stationary in computer rooms." },
+                    { text: "For making mobile phone calls to parents from playgrounds", isCorrect: false, rationale: "Phones are used for calls." }
+                ]
+            },
+            {
+                question: "What is a laptop computer (also known as a notebook)?",
+                options: [
+                    { text: "A stationary computer with separate monitor, keyboard, and heavy tower unit", isCorrect: false, rationale: "This describes a desktop." },
+                    { text: "A portable computer where the monitor, keyboard, pointing device, and processor are combined into a single unit", isCorrect: true, rationale: "Laptops integrate all core computing components into one compact clamshell casing." },
+                    { text: "A wrist-worn device running OLED apps", isCorrect: false, rationale: "This describes a smartwatch." },
+                    { text: "A large industrial mainframe computer running time-sharing systems", isCorrect: false, rationale: "This is a mainframe." }
+                ]
+            },
+            {
+                question: "What are three key design features of laptop computers?",
+                options: [
+                    { text: "Heavy weight, high power consumption, and massive heat output", isCorrect: false, rationale: "Laptops are engineered to be lightweight, low power, and low heat." },
+                    { text: "Lightweight for portability, low power consumption for extended battery life, and low heat output", isCorrect: true, rationale: "Portability requires lightweight design, efficient batteries, and effective cooling." },
+                    { text: "Separate tower casing, wired mechanical keyboard, and CRT monitor", isCorrect: false, rationale: "These are desktop features." },
+                    { text: "Stationary mains power reliance and copper water-cooling pipes", isCorrect: false, rationale: "Water cooling is rare in standard laptops." }
+                ]
+            },
+            {
+                question: "What is a primary advantage of laptops over desktops regarding physical workspace?",
+                options: [
+                    { text: "All components are in a single unit, eliminating trailing wires and desk clutter while saving space", isCorrect: true, rationale: "Clamshell integration removes the cable clutter associated with separate desktop peripherals." },
+                    { text: "Laptops require three separate power sockets to operate.", isCorrect: false, rationale: "Laptops use a single charger." },
+                    { text: "Laptops take up more desk space than desktop computer setups.", isCorrect: false, rationale: "Laptops have a much smaller footprint." },
+                    { text: "Laptops require external wired mice and keyboards to function.", isCorrect: false, rationale: "Laptops have built-in keyboards and trackpads." }
+                ]
+            },
+            {
+                question: "How does portability benefit laptop users in professional or educational environments?",
+                options: [
+                    { text: "Users can easily carry their computer to meetings, classrooms, or public spaces and take full advantage of Wi-Fi features", isCorrect: true, rationale: "Portability allows working from anywhere with wireless network access." },
+                    { text: "It prevents users from ever connecting to the internet.", isCorrect: false, rationale: "Laptops connect to wireless networks." },
+                    { text: "It forces users to stay anchored to a single office desk.", isCorrect: false, rationale: "Portability allows movement." },
+                    { text: "It eliminates the need for any battery charging.", isCorrect: false, rationale: "Batteries require periodic charging." }
+                ]
+            },
+            {
+                question: "What is a major disadvantage of laptops compared to desktop computers regarding security and risk?",
+                options: [
+                    { text: "High risk of theft and physical breakages due to portability", isCorrect: true, rationale: "Being portable means laptops can be easily dropped, damaged, or stolen." },
+                    { text: "They are too heavy for human adults to lift off a desk.", isCorrect: false, rationale: "Laptops weigh only a few pounds." },
+                    { text: "They cannot be locked with physical security cables.", isCorrect: false, rationale: "Most laptops feature Kensington security lock slots." },
+                    { text: "They are immune to physical damage.", isCorrect: false, rationale: "Drop damage is a common risk." }
+                ]
+            },
+            {
+                question: "What is a limitation of laptops regarding hardware upgrades compared to desktops?",
+                options: [
+                    { text: "Limited upgrade options, such as difficulty adding more RAM or upgrading graphics components", isCorrect: true, rationale: "Compact laptop architecture makes internal component upgrades difficult or impossible." },
+                    { text: "Laptops have unlimited modular internal expansion bays.", isCorrect: false, rationale: "Their compact size prevents extra expansion bays." },
+                    { text: "Laptops require upgrading the entire motherboard to change the wallpaper.", isCorrect: false, rationale: "Wallpaper is a software setting." },
+                    { text: "Laptops cannot connect to external USB flash drives.", isCorrect: false, rationale: "Laptops have multiple USB ports." }
+                ]
+            },
+            {
+                question: "Besides standard office and educational tasks, what specialized real-world application is well-suited for laptops?",
+                options: [
+                    { text: "Control and monitoring: portable data collection and performance monitoring, such as gas boiler maintenance", isCorrect: true, rationale: "Engineers use portable laptops in the field to connect to industrial machinery and run diagnostics." },
+                    { text: "Wrist-worn continuous heart rate monitoring during marathon running", isCorrect: false, rationale: "This is done by smartwatches." },
+                    { text: "Pocket telephone calling while jogging on public sidewalks", isCorrect: false, rationale: "This is done by smartphones." },
+                    { text: "Processing massive national census data using stationary mainframes", isCorrect: false, rationale: "Mainframes handle massive census data." }
+                ]
+            },
+            {
+                question: "What is a smartphone according to IGCSE ICT specifications?",
+                options: [
+                    { text: "A device that only makes analogue voice phone calls with no data capability", isCorrect: false, rationale: "Smartphones run operating systems and apps." },
+                    { text: "A mobile device that allows phone calls and runs applications through operating systems like iOS or Android", isCorrect: true, rationale: "Smartphones combine traditional telephony with advanced mobile operating systems and app ecosystems." },
+                    { text: "A stationary desktop unit connected to a landline wall jack", isCorrect: false, rationale: "Landlines are not smartphones." },
+                    { text: "A wrist-mounted timepiece without internet access", isCorrect: false, rationale: "Smartwatches connect to the internet." }
+                ]
+            },
+            {
+                question: "How do smartphones connect to the internet?",
+                options: [
+                    { text: "Using Wi-Fi hotspots or cellular mobile phone networks (3G/4G/5G)", isCorrect: true, rationale: "Smartphones use wireless Wi-Fi and mobile data networks to maintain internet connectivity on the move." },
+                    { text: "Using wired copper Ethernet patch cables plugged into wall ports", isCorrect: false, rationale: "Smartphones lack Ethernet ports." },
+                    { text: "Using optical laser discs inserted into disk drives", isCorrect: false, rationale: "Phones do not have optical drives." },
+                    { text: "Using magnetic tape reels", isCorrect: false, rationale: "Tape is not used in phones." }
+                ]
+            },
+            {
+                question: "What are some of the main uses of smartphones?",
+                options: [
+                    { text: "Sending/receiving emails, running mobile apps, photography/videography, and music/video playback", isCorrect: true, rationale: "Smartphones function as versatile pocket computers for communication, media, and productivity apps." },
+                    { text: "Welding industrial steel beams in automotive factories", isCorrect: false, rationale: "Industrial welding uses automated robotic arms." },
+                    { text: "Printing multi-part carbon copy invoices on continuous tractor-fed paper", isCorrect: false, rationale: "This uses dot matrix printers." },
+                    { text: "Compiling massive C++ server software suites", isCorrect: false, rationale: "Development is done on PCs." }
+                ]
+            },
+            {
+                question: "What is an advantage of smartphones regarding location awareness compared to traditional laptops?",
+                options: [
+                    { text: "They have built-in GPS and apps that can determine instant location, which is a feature not inherently found in all laptops or desktops", isCorrect: true, rationale: "Smartphones include cellular GPS hardware for instant location tracking and navigation." },
+                    { text: "Smartphones have larger screens than laptops for detailed map viewing.", isCorrect: false, rationale: "Smartphones have much smaller screens." },
+                    { text: "Smartphones can run heavy CAD engineering software faster than a desktop.", isCorrect: false, rationale: "Desktops handle CAD better." },
+                    { text: "Smartphones never run out of battery power.", isCorrect: false, rationale: "Phone batteries drain quickly during GPS use." }
+                ]
+            },
+            {
+                question: "What is a disadvantage of smartphones regarding physical input and screen size?",
+                options: [
+                    { text: "Small screens and virtual onscreen keyboards make reading pages and typing more difficult and prone to errors", isCorrect: true, rationale: "Compact dimensions limit screen real estate and make typing on glass keyboards slower." },
+                    { text: "Smartphones are too heavy to hold in one hand.", isCorrect: false, rationale: "Smartphones weigh only a few ounces." },
+                    { text: "Smartphones require an external mechanical QWERTY keyboard to operate.", isCorrect: false, rationale: "Smartphones use touchscreen virtual keyboards." },
+                    { text: "Smartphones cannot display color images.", isCorrect: false, rationale: "Smartphones feature high-definition color displays." }
+                ]
+            },
+            {
+                question: "How does battery life typically behave on smartphones during heavy web browsing or photography?",
+                options: [
+                    { text: "Web browsing and photography quickly drain the battery", isCorrect: true, rationale: "Screen illumination, processor load, and camera sensors consume significant power, draining smartphone batteries fast." },
+                    { text: "Battery life increases exponentially during camera use.", isCorrect: false, rationale: "Camera use consumes substantial power." },
+                    { text: "Smartphones generate their own electricity from sunlight while browsing.", isCorrect: false, rationale: "They require battery charging." },
+                    { text: "Battery percentage remains locked at 100% permanently.", isCorrect: false, rationale: "Batteries deplete with use." }
+                ]
+            },
+            {
+                question: "What is a tablet computer (tablet PC)?",
+                options: [
+                    { text: "A desktop computer built inside a wooden desk drawer", isCorrect: false, rationale: "This is incorrect." },
+                    { text: "A mobile computer controlled primarily by a touch-sensitive screen, offering high portability and fast startup times", isCorrect: true, rationale: "Tablets are flat, touch-operated mobile computers bridging smartphones and laptops." },
+                    { text: "A stationary mainframe computer with punch card readers", isCorrect: false, rationale: "This is obsolete technology." },
+                    { text: "A typewriter with an electronic ink ribbon", isCorrect: false, rationale: "This is a typewriter." }
+                ]
+            },
+            {
+                question: "What are some key features and advantages of tablet computers compared to traditional laptops?",
+                options: [
+                    { text: "Lower weight, longer battery life, touch-screen ease of use without external input devices, and fast startup times", isCorrect: true, rationale: "Tablets boot instantly, weigh very little, and rely on touch interfaces for ultimate portability." },
+                    { text: "They include built-in physical mechanical keyboards and dual CD drives.", isCorrect: false, rationale: "Tablets lack physical keyboards and optical drives." },
+                    { text: "They have larger storage capacities than high-end desktop workstations.", isCorrect: false, rationale: "Tablets have comparatively limited storage." },
+                    { text: "They run desktop server operating systems natively.", isCorrect: false, rationale: "Tablets run mobile operating systems." }
+                ]
+            },
+            {
+                question: "What is a disadvantage of tablet computers compared to laptops?",
+                options: [
+                    { text: "Typing on a touchscreen is cumbersome and error-prone compared to a physical keyboard, and they have lesser storage/memory", isCorrect: true, rationale: "Onscreen typing lacks tactile feedback, and tablets offer fewer upgrade and storage options than laptops." },
+                    { text: "Tablets take up more physical space in a backpack than a desktop.", isCorrect: false, rationale: "Tablets are extremely flat and compact." },
+                    { text: "Tablets require a heavy mains power cable plugged in at all times.", isCorrect: false, rationale: "Tablets are battery-powered mobile devices." },
+                    { text: "Tablets cannot connect to Wi-Fi networks.", isCorrect: false, rationale: "Tablets feature built-in Wi-Fi." }
+                ]
+            },
+            {
+                question: "What is a smartwatch?",
+                options: [
+                    { text: "A traditional mechanical pocket watch powered by springs", isCorrect: false, rationale: "Pocket watches are non-computerized." },
+                    { text: "A mini-computer worn on the wrist that offers smartphone-like functions, OLED displays, and Bluetooth connectivity", isCorrect: true, rationale: "Smartwatches function as wearable companion computers tracking health and notifications." },
+                    { text: "A large wall clock connected to an office mainframe", isCorrect: false, rationale: "This is a wall clock." },
+                    { text: "A desktop monitor shaped like a wristwatch", isCorrect: false, rationale: "This is incorrect." }
+                ]
+            },
+            {
+                question: "According to IGCSE ICT exam guidelines, if a question asks about the advantages and disadvantages of smartwatches, what should you also include?",
+                options: [
+                    { text: "The advantages and disadvantages of smartphones in detail", isCorrect: true, rationale: "Because smartwatches share core mobile computing functions with smartphones, examiners accept smartphone points for smartwatch answers." },
+                    { text: "The advantages and disadvantages of industrial mainframe computers", isCorrect: false, rationale: "Mainframes share no functional overlap with smartwatches." },
+                    { text: "The history of mechanical clockmaking in the 18th century", isCorrect: false, rationale: "History is not part of ICT exams." },
+                    { text: "The wiring schematics of desktop power supply units", isCorrect: false, rationale: "This is irrelevant." }
+                ]
+            },
+            {
+                question: "Which of the following devices is considered the *most portable* among common mobile computers?",
+                options: [
+                    { text: "Desktop computer", isCorrect: false, rationale: "Desktops are stationary." },
+                    { text: "Laptop computer", isCorrect: false, rationale: "Laptops are portable but larger than phones." },
+                    { text: "Smartphone", isCorrect: true, rationale: "Smartphones are pocket-sized and engineered to be the most portable computing devices." },
+                    { text: "Mainframe computer", isCorrect: false, rationale: "Mainframes occupy entire rooms." }
+                ]
+            },
+            {
+                question: "Which of the following devices is considered the *most expandable* among mobile computers?",
+                options: [
+                    { text: "Smartphone", isCorrect: false, rationale: "Smartphones have sealed units with zero internal user upgradeability." },
+                    { text: "Tablet computer", isCorrect: false, rationale: "Tablets are sealed compact devices." },
+                    { text: "Laptop computer (Notebook)", isCorrect: true, rationale: "Laptops offer more expandability options (like upgrading RAM or storage drives) compared to phones and tablets." },
+                    { text: "Smartwatch", isCorrect: false, rationale: "Smartwatches are completely sealed." }
+                ]
+            },
+            {
+                question: "How do file transfers and app installations typically differ on tablets/smartphones compared to laptops?",
+                options: [
+                    { text: "File transfer and app installation on mobile devices often go through restricted app stores rather than direct drag-and-drop file management", isCorrect: true, rationale: "Mobile operating systems enforce sandboxed app stores, making direct file system drag-and-drop more cumbersome than on laptops." },
+                    { text: "Laptops do not allow any software installation at all.", isCorrect: false, rationale: "Laptops install software freely." },
+                    { text: "Tablets require punch cards to load software.", isCorrect: false, rationale: "Punch cards are obsolete." },
+                    { text: "Smartphones use floppy disks for file sharing.", isCorrect: false, rationale: "Floppy disks are obsolete." }
+                ]
+            },
+            {
+                question: "Why might an enterprise or office worker choose a desktop computer over a laptop despite the lack of portability?",
+                options: [
+                    { text: "Better ergonomics with full-sized keyboards, large multi-monitor setups, and superior processing power for heavy tasks", isCorrect: true, rationale: "Office workers benefit from comfortable full-sized desks, larger screens, and better performance per cost." },
+                    { text: "Because desktop computers can be easily worn on the wrist while walking.", isCorrect: false, rationale: "Desktops cannot be worn." },
+                    { text: "Because laptops explode when connected to office printers.", isCorrect: false, rationale: "This is false." },
+                    { text: "Because desktops run on solar power exclusively.", isCorrect: false, rationale: "Desktops use mains electricity." }
+                ]
+            },
+            {
+                question: "What is a phablet?",
+                options: [
+                    { text: "A hybrid mobile device combining the features and screen size of a smartphone and a tablet", isCorrect: true, rationale: "Phablets feature larger screens than typical smartphones but remain smaller than standard tablets." },
+                    { text: "A physical cable used to connect printers to desktops.", isCorrect: false, rationale: "This is a printer cable." },
+                    { text: "A mainframe computer running batch jobs.", isCorrect: false, rationale: "This is a mainframe." },
+                    { text: "A wrist-worn fitness tracker.", isCorrect: false, rationale: "This is a smartwatch." }
+                ]
+            },
+            {
+                question: "In what scenario would a mobile tablet be preferred over a laptop by a retail store worker?",
+                options: [
+                    { text: "When carrying a lightweight device around the shop floor to check stock or process customer mobile payments standing up", isCorrect: true, rationale: "Tablets are ultra-light and handheld, making them ideal for mobile retail inventory and checkout tasks." },
+                    { text: "When rendering 4K Hollywood animated feature films in a studio.", isCorrect: false, rationale: "Film rendering requires powerful desktop workstations." },
+                    { text: "When running complex enterprise accounting database servers overnight.", isCorrect: false, rationale: "Servers require desktop or mainframe hardware." },
+                    { text: "When typing a 500-page academic thesis with strict formatting.", isCorrect: false, rationale: "Typing long documents is easier on a laptop/desktop keyboard." },
+                    { text: "When needing wired Ethernet connections in a fixed server room.", isCorrect: false, rationale: "Tablets rely primarily on Wi-Fi." }
+                ]
+            },
+            {
+                question: "What is a key similarity between desktop computers and laptop computers in terms of usage?",
+                options: [
+                    { text: "They both serve similar general-purpose software and office productivity roles", isCorrect: true, rationale: "Both run the same class of operating systems and application software for business, education, and entertainment." },
+                    { text: "They both run on rechargeable lithium wristwatch batteries.", isCorrect: false, rationale: "Desktops plug into wall mains power." },
+                    { text: "They both feature built-in cellular voice calling antennas.", isCorrect: false, rationale: "Standard PCs and laptops do not have cellular phone voice capability." },
+                    { text: "They both weigh less than 200 grams.", isCorrect: false, rationale: "Both are significantly heavier than 200 grams." }
+                ]
+            },
+            {
+                question: "Why do laptops generate heat, and how is it managed?",
+                options: [
+                    { text: "Compact internal components generate heat that must be managed by low-heat processors and effective internal cooling fans/heat sinks", isCorrect: true, rationale: "Because space is tight, laptops require specialized low-power mobile CPUs and cooling systems to prevent overheating." },
+                    { text: "Laptops generate heat using open gas flames inside the casing.", isCorrect: false, rationale: "Open flames do not exist inside computers." },
+                    { text: "Laptops do not generate any heat because they lack electricity.", isCorrect: false, rationale: "Electrical circuits generate heat." },
+                    { text: "Heat is managed by submerging the entire laptop in water.", isCorrect: false, rationale: "Water would ruin electronic components." }
+                ]
+            },
+            {
+                question: "What is a major security vulnerability of smartphones compared to desktop computers left in an office?",
+                options: [
+                    { text: "Smartphones are easily lost or stolen while carried out in public places due to their small pocket-sized nature", isCorrect: true, rationale: "Carrying phones everywhere in public exposes them to loss, misplacement, and theft." },
+                    { text: "Smartphones are too large to fit inside a pocket, making them difficult to misplace.", isCorrect: false, rationale: "Smartphones are pocket-sized." },
+                    { text: "Smartphones cannot be password-protected.", isCorrect: false, rationale: "Smartphones support PINs, face ID, and fingerprints." },
+                    { text: "Desktops are stolen more frequently than pocket phones.", isCorrect: false, rationale: "Stationary heavy desktops are much harder to steal than pocket devices." }
+                ]
+            },
+            {
+                question: "How do data transfer rates typically compare between Wi-Fi and mobile cellular networks (3G/4G/5G) on mobile devices?",
+                options: [
+                    { text: "Mobile phone network data transfer rates can sometimes be slower or subject to signal coverage compared to a stable local Wi-Fi router", isCorrect: true, rationale: "Cellular data speeds fluctuate based on signal strength and network congestion compared to fixed broadband Wi-Fi." },
+                    { text: "Cellular networks are always infinitely faster than any Wi-Fi connection.", isCorrect: false, rationale: "Wi-Fi speeds often exceed cellular data." },
+                    { text: "Mobile networks do not transmit data packets.", isCorrect: false, rationale: "Mobile networks transmit data packets constantly." },
+                    { text: "Wi-Fi only works underwater.", isCorrect: false, rationale: "Wi-Fi is a wireless radio technology." }
+                ]
+            },
+            {
+                question: "Which computer type would be best recommended for an office worker who splits time working between the corporate headquarters, home, and client meetings while needing full keyboard productivity?",
+                options: [
+                    { text: "Laptop computer (Notebook)", isCorrect: true, rationale: "Laptops offer the ideal balance of portability, clamshell keyboard productivity, and full application capability for mobile professionals." },
+                    { text: "A heavy desktop workstation with separate CRT monitor", isCorrect: false, rationale: "Desktops cannot be easily transported between locations." },
+                    { text: "A smartwatch worn on the wrist", isCorrect: false, rationale: "Smartwatches lack keyboards for heavy document work." },
+                    { text: "An industrial mainframe computer", isCorrect: false, rationale: "Mainframes are stationary enterprise systems." }
+                ]
+            },
+            {
+                question: "Which of the following best summarizes the overall distinction between desktop computers and mobile computers in IGCSE ICT?",
+                options: [
+                    { text: "Desktop computers are stationary, high-specification systems built with separate components, whereas mobile computers (laptops, tablets, smartphones) are compact, battery-powered, and designed for portability", isCorrect: true, rationale: "This summarizes the core curriculum distinction focusing on stationarity, component separation, portability, and power source." },
+                    { text: "Desktop computers run mobile apps, while mobile computers run factory robotics exclusively.", isCorrect: false, rationale: "This is incorrect." },
+                    { text: "There is no functional difference between any computer types.", isCorrect: false, rationale: "Their designs, use cases, and hardware specs differ significantly." },
+                    { text: "Mobile computers require wall power mains at all times.", isCorrect: false, rationale: "Mobile computers use internal batteries." }
+                ]
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let answered = false;
+
+        const questionCounter = document.getElementById("question-counter");
+        const scoreDisplay = document.getElementById("score-display");
+        const questionBox = document.getElementById("question-box");
+        const optionsContainer = document.getElementById("options-container");
+        const feedbackBox = document.getElementById("feedback-box");
+        const nextBtn = document.getElementById("next-btn");
+        const quizContainer = document.getElementById("quiz-container");
+        const resultsContainer = document.getElementById("results-container");
+        const finalScore = document.getElementById("final-score");
+
+        function loadQuestion() {
+            answered = false;
+            feedbackBox.classList.add("hidden");
+            nextBtn.classList.add("hidden");
+
+            const q = questions[currentQuestionIndex];
+            questionCounter.textContent = `Question ${currentQuestionIndex + 1} of ${questions.length}`;
+            scoreDisplay.textContent = `Score: ${score}`;
+            questionBox.textContent = q.question;
+
+            optionsContainer.innerHTML = "";
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement("button");
+                btn.className = "option-btn";
+                btn.textContent = opt.text;
+                btn.onclick = () => selectOption(idx);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function selectOption(selectedIndex) {
+            if (answered) return;
+            answered = true;
+
+            const q = questions[currentQuestionIndex];
+            const allOptionButtons = optionsContainer.children;
+
+            q.options.forEach((opt, idx) => {
+                allOptionButtons[idx].disabled = true;
+                if (opt.isCorrect) {
+                    allOptionButtons[idx].classList.add("correct");
+                } else if (idx === selectedIndex) {
+                    allOptionButtons[idx].classList.add("incorrect");
+                }
+            });
+
+            const selectedOpt = q.options[selectedIndex];
+            feedbackBox.classList.remove("hidden");
+            if (selectedOpt.isCorrect) {
+                score++;
+                scoreDisplay.textContent = `Score: ${score}`;
+                feedbackBox.className = "feedback-box correct-feedback";
+                feedbackBox.innerHTML = `<strong>Correct!</strong> ${selectedOpt.rationale}`;
+            } else {
+                feedbackBox.className = "feedback-box incorrect-feedback";
+                feedbackBox.innerHTML = `<strong>Incorrect.</strong> ${selectedOpt.rationale}`;
+            }
+
+            if (currentQuestionIndex < questions.length - 1) {
+                nextBtn.textContent = "Next Question";
+            } else {
+                nextBtn.textContent = "View Results";
+            }
+            nextBtn.classList.remove("hidden");
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                loadQuestion();
+            } else {
+                quizContainer.classList.add("hidden");
+                resultsContainer.classList.remove("hidden");
+                finalScore.textContent = `You scored ${score} out of ${questions.length}`;
+            }
+        }
+
+        function restartQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            resultsContainer.classList.add("hidden");
+            quizContainer.classList.remove("hidden");
+            loadQuestion();
+        }
+
+        // Initialize quiz on load
+        loadQuestion();
+    </script>
+</body>
+</html>
